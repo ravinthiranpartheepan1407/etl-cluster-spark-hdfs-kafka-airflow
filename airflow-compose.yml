@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  airflow:
+    image: apache/airflow
+    entrypoint: /bin/bash
+    command:
+      - -c
+      - airflow db init &&
+        airflow users create --role Admin --username admin --password admin --email surenpartheepan1407@gmail.com --firstname admin --lastname admin &&
+        airflow standalone
+    ports:
+      - 8080:8080
+    volumes:
+      - ./../data:/opt/airflow/data
+      - ./../dags:/opt/airflow/dags
+    networks:
+      - confluent
+
+networks:
+  confluent:

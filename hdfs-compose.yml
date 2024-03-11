@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  namenode:
+    image: bde2020/hadoop-namenode
+    container_name: namenode
+    restart: always
+    ports:
+      - 9870:9870
+      - 9000:9000
+    volumes:
+      - hadoop_namenode:/hadoop/dfs/name
+    environment:
+      - CLUSTER_NAME=bigdataetl
+    env_file:
+      - ./config
+    networks:
+      - confluent
+
+  datanode:
+    image: bde2020/hadoop-datanode
+    container_name: datanode
+    restart: always
+    volumes:
+      - hadoop_datanode:/hadoop/dfs/data
+    environment:
+      SERVICE_PRECONDITION: "namenode:9870"
+    env_file:
+      - ./config
+    networks:
+      - confluent
+
+volumes:
+  hadoop_namenode:
+  hadoop_datanode:
+
+networks:
+  confluent:
