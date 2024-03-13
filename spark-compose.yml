@@ -11,7 +11,7 @@ services:
       - SPARK_SSL_ENABLED=NO
       - SPARK_USER=spark
     ports:
-      - '8090:8090'
+      - '9090:9090'
       - '7077:7077'
     networks:
       - confluent

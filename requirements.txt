@@ -2,3 +2,6 @@ apache-airflow
 hdfs
 kafka-python
 pyspark
+apache-airflow-providers-apache-spark
+python-dotenv
+requests

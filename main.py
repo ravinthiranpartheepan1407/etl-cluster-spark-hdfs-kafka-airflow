@@ -1,16 +1,22 @@
-# This is a sample Python script.
+import json
+import os
+import requests
+from dotenv import load_dotenv
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+load_dotenv()
+
+get_api = os.getenv("EXCHANGE_API")
+url = f"https://v6.exchangerate-api.com/v6/{get_api}/latest/USD"
+res = requests.get(url)
+try:
+    if res.status_code == 200:
+        print(res.json())
+        file_path = os.path.join("data", "exchange_rate.json")
+        with open(file_path, "w") as file:
+            json.dump(res.json(), file, indent=4)
+    else:
+        print(res.status_code)
+except Exception as err:
+    print(err)
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
